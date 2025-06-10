@@ -1,0 +1,23 @@
+#!/bin/sh
+
+OLLAMA_BASE_URL=http://localhost:5000
+
+# ENABLE_SIGNUP=false
+# ENABLE_LOGIN_FORM=false
+ENV=prod
+OFFLINE_MODE=true
+RAG_EMBEDDING_MODEL_AUTO_UPDATE=false
+RAG_RERANKING_MODEL_AUTO_UPDATE=false
+WHISPER_MODEL_AUTO_UPDATE=false
+OAUTH_UPDATE_PICTURE_ON_LOGIN=false
+RAG_EMBEDDING_MODEL_TRUST_REMOTE_CODE=false
+ENABLE_OPENAI_API=false
+RESET_CONFIG_ON_START=true
+DATA_DIR=./.webui_data
+HF_HUB_OFFLINE=1
+
+if $OFFLINE_MODE; then
+  echo 'Running in offline mode. Some features may be limited.'
+fi
+
+open-webui serve

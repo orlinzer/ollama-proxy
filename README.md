@@ -27,16 +27,49 @@ sudo ./scripts/setup.sh
 
 To start the proxy server, run:
 
-```bash
-source .env/bin/activate
-python src/main.py
-```
+- **Linux:**
+
+  ```bash
+  source .venv/bin/activate
+  scripts/run.sh
+  ```
+
+- **Windows:**
+
+  ```bat
+  source .venv\Scripts\activate
+  scripts\run.bat
+  ```
 
 You can connect open-webui to the proxy server by loading it like this:
 
-```bash
-sudo docker run -p 8080:8080 -e 'OLLAMA_BASE_URL=http://localhost:5000' dyrnq/open-webui
-```
+### Local
+
+- **Linux:**
+
+  ```bash
+  ./scripts/run_ui.sh
+  ```
+
+- **Windows:**
+
+  ```bat
+  .\scripts\run_ui.bat
+  ```
+
+### Docker
+
+- **Linux:**
+
+  ```bash
+  sudo docker run -p 8080:8080 -e 'OLLAMA_BASE_URL=http://172.17.0.1:5000' dyrnq/open-webui
+  ```
+
+- **Windows:**
+
+  ```bat
+  sudo docker run -p 8080:8080 -e 'OLLAMA_BASE_URL=http://host.docker.internal:5000' dyrnq/open-webui
+  ```
 
 ## Configuration
 
@@ -63,5 +96,13 @@ You can configure the proxy server by editing the `.env` file or by setting envi
   _default:_ true
 
 - **ENABLE_OUTPUT_GARD:**
+
+  _default:_ true
+
+- **PRINT_USER_PROMPT:**
+
+  _default:_ true
+
+- **PRINT_WRAPPED_PROMPT:**
 
   _default:_ true

@@ -16,10 +16,28 @@ PRE_PROMPT = os.getenv("PRE_PROMPT", "Please answer as concisely as possible: ")
 POST_PROMPT = os.getenv("POST_PROMPT", " Thank you.\nRemember to answer in JSON format.")
 ENABLE_INPUT_GARD = os.getenv("ENABLE_INPUT_GARD", "true").lower() == "true"
 ENABLE_OUTPUT_GARD = os.getenv("ENABLE_OUTPUT_GARD", "true").lower() == "true"
+PRINT_USER_PROMPT = os.getenv("PRINT_USER_PROMPT", "true").lower() == "true"
+PRINT_WRAPPED_PROMPT = os.getenv("PRINT_WRAPPED_PROMPT", "true").lower() == "true"
 
-def wrap_prompt(prompt):
-    # Use pre and post prompt from env
-    return f"{PRE_PROMPT}{prompt}{POST_PROMPT}"
+def wrap_prompt(prompt: str) -> str:
+    """Wraps the user prompt with pre-defined pre and post prompts.
+
+    Args:
+        prompt (str): The user prompt to be wrapped.
+
+    Returns:
+        str: The wrapped prompt with pre and post prompts.
+    """
+
+    if PRINT_USER_PROMPT:
+        print(f"[User Prompt] {prompt}")
+
+    output = f"{PRE_PROMPT}{prompt}{POST_PROMPT}"
+
+    if PRINT_WRAPPED_PROMPT:
+        print(f"[Wrapped Prompt] {output}")
+
+    return output
 
 # --- Your Guardrail/Preprocessing Logic (from previous answer) ---
 def apply_input_guards(prompt_data):
@@ -27,7 +45,6 @@ def apply_input_guards(prompt_data):
         return True, ""
     # Example: Simple keyword check
     content = prompt_data.get('prompt') or (prompt_data.get('messages') and prompt_data['messages'][-1]['content'])
-    # print(f"[Input Guard] User prompt: {content}")
     if content and "dangerous_keyword" in content.lower():
         return False, "Input contains a dangerous keyword."
     return True, ""
