@@ -3,8 +3,8 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
-
-app = Flask(__name__)
+from waitress import serve
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
@@ -12,12 +12,18 @@ load_dotenv()
 # Configuration from environment variables
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 PORT = int(os.getenv("PORT", 5000))
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 PRE_PROMPT = os.getenv("PRE_PROMPT", "Please answer as concisely as possible: ")
 POST_PROMPT = os.getenv("POST_PROMPT", " Thank you.\nRemember to answer in JSON format.")
 ENABLE_INPUT_GARD = os.getenv("ENABLE_INPUT_GARD", "true").lower() == "true"
 ENABLE_OUTPUT_GARD = os.getenv("ENABLE_OUTPUT_GARD", "true").lower() == "true"
 PRINT_USER_PROMPT = os.getenv("PRINT_USER_PROMPT", "true").lower() == "true"
 PRINT_WRAPPED_PROMPT = os.getenv("PRINT_WRAPPED_PROMPT", "true").lower() == "true"
+
+# Set up the server configuration
+app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=LOG_LEVEL)
 
 def wrap_prompt(prompt: str) -> str:
     """Wraps the user prompt with pre-defined pre and post prompts.
@@ -30,12 +36,12 @@ def wrap_prompt(prompt: str) -> str:
     """
 
     if PRINT_USER_PROMPT:
-        print(f"[User Prompt] {prompt}")
+        app.logger.info(f"[User Prompt] {prompt}")
 
     output = f"{PRE_PROMPT}{prompt}{POST_PROMPT}"
 
     if PRINT_WRAPPED_PROMPT:
-        print(f"[Wrapped Prompt] {output}")
+        app.logger.info(f"[Wrapped Prompt] {output}")
 
     return output
 
@@ -57,6 +63,10 @@ def apply_output_guards(response_data):
         # You could also redact here instead of blocking
         response_data['response'] = "I cannot provide that information."
     return True, "" # For this example, we always allow (or modified)
+
+@app.before_request
+def log_request_info():
+    app.logger.info(f"{request.method} {request.path} from {request.remote_addr}")
 
 # --- Ollama API Proxy Endpoints ---
 
@@ -179,4 +189,6 @@ def models_proxy():
 if __name__ == '__main__':
     # You might want to run this on a different port than Ollama (e.g., 5000)
     # The UI will then connect to this Python server.
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+    # app.run(host='0.0.0.0', port=PORT, debug=True)
+    # serve(app, host='0.0.0.0', port=PORT, threads=4)  # Use Waitress for production
+    serve(app, host='0.0.0.0', port=PORT)  # Use Waitress for production

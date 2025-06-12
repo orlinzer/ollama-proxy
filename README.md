@@ -17,10 +17,20 @@ This project is licensed under the GNU General Public License v3.0. See the [LIC
 
 ## Setup
 
+### Linux
+
 ```bash
 git clone https://github.com/orlinzer/ollama-proxy.git
 cd ollama-proxy
 sudo ./scripts/setup.sh
+```
+
+### Windows
+
+```bat
+git clone https://github.com/orlinzer/ollama-proxy.git
+cd ollama-proxy
+./scripts/setup.bat
 ```
 
 ## Usage
@@ -82,6 +92,10 @@ You can configure the proxy server by editing the `.env` file or by setting envi
 - **PORT:**
 
   _default:_ 5000
+
+- **LOG_LEVEL:**
+  _default:_ INFO
+  _options:_ DEBUG, INFO, WARNING, ERROR, CRITICAL
 
 - **PRE_PROMPT:**
 
