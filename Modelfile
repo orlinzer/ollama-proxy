@@ -1,0 +1,26 @@
+# Defines the base model to use.
+FROM llama3:8b
+
+# Sets the temperature
+PARAMETER temperature 0
+
+# Sets the seed
+PARAMETER seed 1234
+
+# Sets the context window size
+PARAMETER num_ctx 4096
+
+# Specifies the system message that will be set in the template.
+SYSTEM """you are a helpful assistant. Answer the user's questions to the best of your ability, using the information provided in the conversation history. If you don't know the answer, say 'I don't know'."""
+
+# The full prompt template to be sent to the model.
+# TEMPLATE
+
+# Defines the (Q)LoRA adapters to apply to the model.
+# ADAPTER
+
+# Specifies the legal license.
+# LICENSE
+
+# Specify message history.
+# MESSAGE

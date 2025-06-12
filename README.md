@@ -5,6 +5,24 @@
 A simple proxy server for Ollama that allows you to use the Ollama API with a custom URL.
 It provides a way to set pre and post prompts for the API requests and responses, and it can be used with open-webui or other applications that require a custom Ollama API endpoint.
 
+## Table of Contents
+
+- [Ollama Proxy](#ollama-proxy)
+  - [Description](#description)
+  - [Table of Contents](#table-of-contents)
+  - [License](#license)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+    - [Linux](#linux)
+    - [Windows](#windows)
+  - [Usage](#usage)
+    - [Start the proxy server:](#start-the-proxy-server)
+    - [Connect open-webui to the proxy server:](#connect-open-webui-to-the-proxy-server)
+      - [Local](#local)
+      - [Docker](#docker)
+    - [Load a model in Ollama:](#load-a-model-in-ollama)
+  - [Configuration](#configuration)
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
@@ -35,7 +53,7 @@ cd ollama-proxy
 
 ## Usage
 
-To start the proxy server, run:
+### Start the proxy server:
 
 - **Linux:**
 
@@ -51,9 +69,9 @@ To start the proxy server, run:
   scripts\run.bat
   ```
 
-You can connect open-webui to the proxy server by loading it like this:
+### Connect open-webui to the proxy server:
 
-### Local
+#### Local
 
 - **Linux:**
 
@@ -67,7 +85,7 @@ You can connect open-webui to the proxy server by loading it like this:
   .\scripts\run_ui.bat
   ```
 
-### Docker
+#### Docker
 
 - **Linux:**
 
@@ -79,6 +97,20 @@ You can connect open-webui to the proxy server by loading it like this:
 
   ```bat
   sudo docker run -p 8080:8080 -e 'OLLAMA_BASE_URL=http://host.docker.internal:5000' dyrnq/open-webui
+  ```
+
+### Load a model in Ollama:
+
+- **Linux:**
+
+  ```bash
+  scripts/load_model.sh
+  ```
+
+- **Windows:**
+
+  ```bat
+  scripts/load_model.bat
   ```
 
 ## Configuration
@@ -120,3 +152,9 @@ You can configure the proxy server by editing the `.env` file or by setting envi
 - **PRINT_WRAPPED_PROMPT:**
 
   _default:_ true
+
+- **MODEL_NAME:**
+  _default:_ skyllama
+
+- **MODEL_VERSION:**
+  _default:_ latest
