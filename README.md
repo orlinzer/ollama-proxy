@@ -5,55 +5,53 @@
 A simple proxy server for Ollama that allows you to use the Ollama API with a custom URL.
 It provides a way to set pre and post prompts for the API requests and responses, and it can be used with open-webui or other applications that require a custom Ollama API endpoint.
 
-## Table of Contents
-
-- [Ollama Proxy](#ollama-proxy)
-  - [Description](#description)
-  - [Table of Contents](#table-of-contents)
-  - [License](#license)
-  - [Prerequisites](#prerequisites)
-  - [Setup](#setup)
-    - [Linux](#linux)
-    - [Windows](#windows)
-  - [Usage](#usage)
-    - [Start the proxy server:](#start-the-proxy-server)
-    - [Connect open-webui to the proxy server:](#connect-open-webui-to-the-proxy-server)
-      - [Local](#local)
-      - [Docker](#docker)
-    - [Load a model in Ollama:](#load-a-model-in-ollama)
-  - [Configuration](#configuration)
-
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
 
+## Table of Contents
+
+- [Ollama Proxy](#ollama-proxy)
+  - [Description](#description)
+  - [License](#license)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Usage](#usage)
+    - [Start the proxy server](#start-the-proxy-server)
+    - [Connect open-webui to the proxy server](#connect-open-webui-to-the-proxy-server)
+      - [Local](#local)
+      - [Docker](#docker)
+    - [Load a model in Ollama](#load-a-model-in-ollama)
+  - [Configuration](#configuration)
+
 ## Prerequisites
 
-- Ubuntu system
+- Ubuntu or Windows system
 - Ollama
 - git
 
 ## Setup
 
-### Linux
+- **Linux:**
 
-```bash
-git clone https://github.com/orlinzer/ollama-proxy.git
-cd ollama-proxy
-sudo ./scripts/setup.sh
-```
+  ```bash
+  git clone https://github.com/orlinzer/ollama-proxy.git
+  cd ollama-proxy
+  sudo ./scripts/setup.sh
+  ```
 
-### Windows
+- **Windows:**
 
-```bat
-git clone https://github.com/orlinzer/ollama-proxy.git
-cd ollama-proxy
-./scripts/setup.bat
-```
+  ```batchfile
+  git clone https://github.com/orlinzer/ollama-proxy.git
+  cd ollama-proxy
+  ./scripts/setup.bat
+  ```
 
 ## Usage
 
-### Start the proxy server:
+### Start the proxy server
 
 - **Linux:**
 
@@ -64,12 +62,12 @@ cd ollama-proxy
 
 - **Windows:**
 
-  ```bat
+  ```batchfile
   source .venv\Scripts\activate
   scripts\run.bat
   ```
 
-### Connect open-webui to the proxy server:
+### Connect open-webui to the proxy server
 
 #### Local
 
@@ -81,7 +79,7 @@ cd ollama-proxy
 
 - **Windows:**
 
-  ```bat
+  ```batchfile
   .\scripts\run_ui.bat
   ```
 
@@ -95,11 +93,11 @@ cd ollama-proxy
 
 - **Windows:**
 
-  ```bat
+  ```batchfile
   sudo docker run -p 8080:8080 -e 'OLLAMA_BASE_URL=http://host.docker.internal:5000' dyrnq/open-webui
   ```
 
-### Load a model in Ollama:
+### Load a model in Ollama
 
 - **Linux:**
 
@@ -109,7 +107,7 @@ cd ollama-proxy
 
 - **Windows:**
 
-  ```bat
+  ```batchfile
   scripts/load_model.bat
   ```
 
@@ -119,7 +117,7 @@ You can configure the proxy server by editing the `.env` file or by setting envi
 
 - **OLLAMA_HOST:**
 
-  _default:_ http://localhost:11434
+  _default:_ `http://localhost:11434`
 
 - **PORT:**
 
